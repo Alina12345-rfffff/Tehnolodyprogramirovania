@@ -1,4 +1,5 @@
 ﻿using АрендаДомика.ValueObjects.Base;
+using АрендаДомика.ValueObjects.Exceptions;
 
 namespace АрендаДомика.ValueObjects.Validators;
 
@@ -7,6 +8,5 @@ public class PriceValidator : IValidator<decimal>
     public void Validate(decimal value)
     {
         if (value <= 0)
-            throw new ArgumentException("Стоимость проживания должна быть больше нуля.");
+            throw new DomainException("Цена аренды должна быть больше нуля.");
     }
-}

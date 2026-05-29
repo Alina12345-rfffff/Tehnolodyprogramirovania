@@ -1,27 +1,43 @@
-﻿using АрендаДомика.ValueObjects.Exceptions;
+﻿using АрендаДомика.ValueObjects;
 
 namespace АрендаДомика.Domain;
+
+public enum BookingStatus
+{
+    Pending,
+    Confirmed,
+    Rejected
+}
 
 public class Booking
 {
     public Guid Id { get; private set; }
-    public Guid TenantId { get; private set; }
     public Guid HouseId { get; private set; }
-    public DateTime BookingDate { get; private set; }
-    public string Status { get; private set; } // Ожидает / Подтверждена / Отклонена
+    public Price TotalPrice { get; private set; }
+    public BookingStatus Status { get; private set; }
 
-    public Booking(Guid id, Guid tenantId, Guid houseId, DateTime bookingDate)
+    public Booking(Guid id, Guid houseId, Price totalPrice)
     {
-        if (bookingDate.Date < DateTime.UtcNow.Date)
-            throw new DomainException("Нельзя забронировать домик на прошедшую дату.");
-
         Id = id;
-        TenantId = tenantId;
         HouseId = houseId;
-        BookingDate = bookingDate.Date;
-        Status = "Ожидает";
+        TotalPrice = totalPrice;
+        Status = BookingStatus.Pending;
     }
 
-    public void Confirm() => Status = "Подтверждена";
-    public void Reject() => Status = "Отклонена";
+    // Методы для сценария "Подтвердить/отклонить бронь"
+    public void Confirm()
+    {
+        if (Status != BookingStatus.Pending)
+            throw new InvalidOperationException("Можно подтвердить только бронь в ожидании.");
+
+        Status = BookingStatus.Confirmed;
+    }
+
+    public void Reject()
+    {
+        if (Status != BookingStatus.Pending)
+            throw new InvalidOperationException("Можно отклонить только бронь в ожидании.");
+
+        Status = BookingStatus.Rejected;
+    }
 }

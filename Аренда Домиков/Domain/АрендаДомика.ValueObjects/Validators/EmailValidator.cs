@@ -1,21 +1,16 @@
-﻿using System.Text.RegularExpressions;
-using АрендаДомика.ValueObjects.Base;
+﻿using АрендаДомика.ValueObjects.Base;
+using АрендаДомика.ValueObjects.Exceptions;
 
 namespace АрендаДомика.ValueObjects.Validators;
 
 public class EmailValidator : IValidator<string>
 {
-    private static readonly Regex EmailRegex = new(
-        @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
-        RegexOptions.Compiled | RegexOptions.IgnoreCase
-    );
-
     public void Validate(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Email не может быть пустым.");
+            throw new ValidatorNullException(nameof(value));
 
-        if (!EmailRegex.IsMatch(value))
-            throw new ArgumentException("Некорректный формат Email адреса.");
+        if (!value.Contains("@") || !value.Contains("."))
+            throw new DomainException("Неверный формат Email адреса.");
     }
 }
