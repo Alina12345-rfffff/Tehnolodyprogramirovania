@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/Application/" />
-  <Folder Name="/Domain/" />
+  <Folder Name="/Domain/">
+    <Project Path="Domain/АрендаДомика.ValueObjects/АрендаДомика.ValueObjects.csproj" Id="729f43d1-3ff0-4cf3-b713-819dd5fa7a88" />
+  </Folder>
   <Folder Name="/Infrastructure/" />
   <Folder Name="/Presentation/" />
 </Solution>
