@@ -7,10 +7,8 @@ public class Email : ValueObject<string>
 {
     private static readonly EmailValidator Validator = new();
 
-   
-    protected Email(string value) : base(value)
+    protected Email(string value) : base(Validator, value)
     {
-        Validator.Validate(value);
     }
 
     public static Email Create(string value)

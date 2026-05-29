@@ -1,5 +1,5 @@
 ﻿
-
+using АрендаДомика.ValueObjects.Exceptions;
 namespace АрендаДомика.ValueObjects.Base;
 
 public abstract class ValueObject<T> : IEquatable<ValueObject<T>>

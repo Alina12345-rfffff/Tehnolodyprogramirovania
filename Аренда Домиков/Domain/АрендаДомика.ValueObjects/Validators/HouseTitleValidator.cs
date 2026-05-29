@@ -1,5 +1,5 @@
-﻿using АрендаДомика.ValueObjects.Base;
-using АрендаДомика.ValueObjects.Exceptions;
+﻿using АрендаДомика.ValueObjects.Exceptions;
+using АрендаДомика.ValueObjects.Base;
 
 namespace АрендаДомика.ValueObjects.Validators;
 

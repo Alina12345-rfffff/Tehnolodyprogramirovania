@@ -10,3 +10,4 @@ public class PriceValidator : IValidator<decimal>
         if (value <= 0)
             throw new DomainException("Цена аренды должна быть больше нуля.");
     }
+}

@@ -7,9 +7,8 @@ public class HouseTitle : ValueObject<string>
 {
     private static readonly HouseTitleValidator Validator = new();
 
-    protected HouseTitle(string value) : base(value)
+    protected HouseTitle(string value) : base(Validator, value)
     {
-        Validator.Validate(value);
     }
 
     public static HouseTitle Create(string value)
