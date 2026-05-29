@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/Application/" />
   <Folder Name="/Domain/">
+    <Project Path="Domain/АрендаДомика.Domain.Repositories.Abstractions/АрендаДомика.Domain.Repositories.Abstractions.csproj" Id="4e0048af-fd6c-451b-9dd0-b493816277e6" />
+    <Project Path="Domain/АрендаДомика.Domain/АрендаДомика.Domain.csproj" Id="69932351-d25b-4b1d-b15b-20f77056437c" />
     <Project Path="Domain/АрендаДомика.ValueObjects/АрендаДомика.ValueObjects.csproj" Id="729f43d1-3ff0-4cf3-b713-819dd5fa7a88" />
   </Folder>
   <Folder Name="/Infrastructure/" />
