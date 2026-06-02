@@ -1,8 +1,4 @@
-﻿
-using FluentValidation;
-using АрендаДомика.ValueObjects.Base;
-
-namespace RentaHouse.Domain.ValueObjects.Base;
+﻿namespace RentaHouse.ValueObjects.Base;
 
 public abstract class ValueObject<T>
 {
@@ -10,12 +6,10 @@ public abstract class ValueObject<T>
 
     protected ValueObject(IValidator<T> validator, T value)
     {
-        // Автоматическая валидация при создании любого Value Object
-        validator.ValidateAndThrow(value);
+        validator.Validate(value);
         Value = value;
     }
 
-    // Переопределяем методы для корректного сравнения VO по значению, а не по ссылке
     public override bool Equals(object? obj)
     {
         if (obj is null || obj.GetType() != GetType()) return false;
