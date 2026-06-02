@@ -1,36 +1,59 @@
-﻿using АрендаДомика.ValueObjects;
+﻿using System;
+using RentaHouse.Domain.Base;
+using RentaHouse.Domain.Exceptions;
+using RentaHouse.ValueObjects;
 
-namespace АрендаДомика.Domain;
-
-public class House
+namespace RentaHouse.Domain
 {
-    public Guid Id { get; private set; }
-    public HouseTitle Title { get; private set; }
-    public string Description { get; private set; }
-    public Price PricePerNight { get; private set; }
-
-    public House(Guid id, HouseTitle title, string description, Price pricePerNight)
+    public class House : Entity<HouseId>
     {
-        Id = id;
-        Title = title;
-        Description = string.IsNullOrWhiteSpace(description)
-            ? throw new ArgumentException("Описание не может быть пустым.")
-            : description;
-        PricePerNight = pricePerNight;
-    }
+        public Landlord Landlord { get; } = default!;
+        public HouseTitle Title { get; private set; } = default!;
+        public HouseDescription Description { get; private set; } = default!;
+        public Address Address { get; private set; } = default!;
+        public Price Price { get; private set; } = default!;
 
-    // Метод для сценария "Редактирование описания домов"
-    public void UpdateDetails(HouseTitle newTitle, string newDescription)
-    {
-        if (string.IsNullOrWhiteSpace(newDescription))
-            throw new ArgumentException("Новое описание не может быть пустым.");
+        protected House() { }
 
-        Title = newTitle ?? throw new ArgumentNullException(nameof(newTitle));
-        Description = newDescription;
-    }
+        public House(HouseId id, Landlord landlord, HouseTitle title, HouseDescription description, Address address, Price price) : base(id)
+        {
+            Landlord = landlord ?? throw new ArgumentNullValueException(nameof(landlord));
+            Title = title ?? throw new ArgumentNullValueException(nameof(title));
+            Description = description ?? throw new ArgumentNullValueException(nameof(description));
+            Address = address ?? throw new ArgumentNullValueException(nameof(address));
+            Price = price ?? throw new ArgumentNullValueException(nameof(price));
+        }
 
-    public void UpdatePrice(Price newPrice)
-    {
-        PricePerNight = newPrice ?? throw new ArgumentNullException(nameof(newPrice));
+        public bool SetTitle(HouseTitle newTitle)
+        {
+            if (newTitle == null) throw new ArgumentNullValueException(nameof(newTitle));
+            if (Title == newTitle) return false;
+            Title = newTitle;
+            return true;
+        }
+
+        public bool SetDescription(HouseDescription newDescription)
+        {
+            if (newDescription == null) throw new ArgumentNullValueException(nameof(newDescription));
+            if (Description == newDescription) return false;
+            Description = newDescription;
+            return true;
+        }
+
+        public bool SetAddress(Address newAddress)
+        {
+            if (newAddress == null) throw new ArgumentNullValueException(nameof(newAddress));
+            if (Address == newAddress) return false;
+            Address = newAddress;
+            return true;
+        }
+
+        public bool SetPrice(Price newPrice)
+        {
+            if (newPrice == null) throw new ArgumentNullValueException(nameof(newPrice));
+            if (Price == newPrice) return false;
+            Price = newPrice;
+            return true;
+        }
     }
 }

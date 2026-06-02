@@ -1,43 +1,36 @@
-﻿using АрендаДомика.ValueObjects;
+﻿using System;
+using RentaHouse.Domain.Base;
+using RentaHouse.Domain.Exceptions;
+using RentaHouse.ValueObjects;
 
-namespace АрендаДомика.Domain;
-
-public enum BookingStatus
+namespace RentaHouse.Domain
 {
-    Pending,
-    Confirmed,
-    Rejected
-}
-
-public class Booking
-{
-    public Guid Id { get; private set; }
-    public Guid HouseId { get; private set; }
-    public Price TotalPrice { get; private set; }
-    public BookingStatus Status { get; private set; }
-
-    public Booking(Guid id, Guid houseId, Price totalPrice)
+    public class Booking : Entity<BookingId>
     {
-        Id = id;
-        HouseId = houseId;
-        TotalPrice = totalPrice;
-        Status = BookingStatus.Pending;
-    }
+        public Tenant Tenant { get; } = default!;
+        public House House { get; } = default!;
+        public DateTime BookingDate { get; }
+        public BookingStatus Status { get; private set; } = default!;
 
-    // Методы для сценария "Подтвердить/отклонить бронь"
-    public void Confirm()
-    {
-        if (Status != BookingStatus.Pending)
-            throw new InvalidOperationException("Можно подтвердить только бронь в ожидании.");
+        protected Booking() { }
 
-        Status = BookingStatus.Confirmed;
-    }
+        public Booking(BookingId id, Tenant tenant, House house, DateTime bookingDate, BookingStatus status) : base(id)
+        {
+            Tenant = tenant ?? throw new ArgumentNullValueException(nameof(tenant));
+            House = house ?? throw new ArgumentNullValueException(nameof(house));
+            BookingStatus = status ?? throw new ArgumentNullValueException(nameof(status));
 
-    public void Reject()
-    {
-        if (Status != BookingStatus.Pending)
-            throw new InvalidOperationException("Можно отклонить только бронь в ожидании.");
+            // Простая валидация даты (например, дата бронирования не может быть из глубокого прошлого)
+            if (bookingDate == default) throw new ArgumentException("Invalid booking date.", nameof(bookingDate));
+            BookingDate = bookingDate;
+        }
 
-        Status = BookingStatus.Rejected;
+        public bool SetStatus(BookingStatus newStatus)
+        {
+            if (newStatus == null) throw new ArgumentNullValueException(nameof(newStatus));
+            if (Status == newStatus) return false;
+            Status = newStatus;
+            return true;
+        }
     }
 }
