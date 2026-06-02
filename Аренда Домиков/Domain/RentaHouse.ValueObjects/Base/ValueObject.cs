@@ -1,4 +1,6 @@
-﻿namespace RentaHouse.ValueObjects.Base;
+﻿using RentaHouse.ValueObjects.Exceptions;
+
+namespace RentaHouse.ValueObjects.Base;
 
 public abstract class ValueObject<T>
 {
@@ -6,6 +8,9 @@ public abstract class ValueObject<T>
 
     protected ValueObject(IValidator<T> validator, T value)
     {
+        if (validator is null)
+            throw new ValidatorNullException(nameof(validator));
+
         validator.Validate(value);
         Value = value;
     }
