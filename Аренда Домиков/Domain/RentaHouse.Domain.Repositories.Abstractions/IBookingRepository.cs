@@ -1,16 +1,17 @@
-﻿namespace АрендаДомика.Domain.Repositories.Abstract;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using RentaHouse.Domain.Repositories.Abstractions.Base;
+using RentaHouse.ValueObjects;
 
-public interface IBookingRepository
+namespace RentaHouse.Domain.Repositories.Abstractions;
+
+public interface IBookingRepository : IRepository<Booking, BookingId>
 {
-    // Найти бронь по ID
-    Task<Booking?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    // Получить все бронирования конкретного жильца
+    Task<IEnumerable<Booking>> GetBookingsByTenantIdAsync(TenantId tenantId, CancellationToken cancellationToken);
 
-    // Сценарий: Запрос на бронь
-    Task AddAsync(Booking booking, CancellationToken cancellationToken = default);
-
-    // Сценарий: Подтвердить/отклонить бронь
-    Task UpdateAsync(Booking booking, CancellationToken cancellationToken = default);
-
-    // Просмотр всех бронирований для конкретного домика
-    Task<IEnumerable<Booking>> GetByHouseIdAsync(Guid houseId, CancellationToken cancellationToken = default);
+    // Проверить, занят ли дом на конкретную дату 
+    Task<bool> IsHouseBookedForDateAsync(HouseId houseId, DateTime date, CancellationToken cancellationToken);
 }
