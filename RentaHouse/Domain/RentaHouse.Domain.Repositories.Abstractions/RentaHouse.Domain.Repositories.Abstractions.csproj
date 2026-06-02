@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\АрендаДомика.ValueObjects\АрендаДомика.ValueObjects.csproj" />
+    <ProjectReference Include="..\АрендаДомика.Domain\RentaHouse.Domain.csproj" />
   </ItemGroup>
 
 </Project>

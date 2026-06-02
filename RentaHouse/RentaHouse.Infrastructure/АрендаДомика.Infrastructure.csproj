@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\АрендаДомика.Domain.Repositories.Abstractions\АрендаДомика.Domain.Repositories.Abstractions.csproj" />
-    <ProjectReference Include="..\Domain\АрендаДомика.Domain\АрендаДомика.Domain.csproj" />
-    <ProjectReference Include="..\Domain\АрендаДомика.ValueObjects\АрендаДомика.ValueObjects.csproj" />
+    <ProjectReference Include="..\Domain\АрендаДомика.Domain.Repositories.Abstractions\RentaHouse.Domain.Repositories.Abstractions.csproj" />
+    <ProjectReference Include="..\Domain\АрендаДомика.Domain\RentaHouse.Domain.csproj" />
+    <ProjectReference Include="..\Domain\АрендаДомика.ValueObjects\RentaHouse.ValueObjects.csproj" />
   </ItemGroup>
 
 </Project>
