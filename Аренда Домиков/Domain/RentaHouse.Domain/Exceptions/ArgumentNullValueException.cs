@@ -6,8 +6,5 @@ namespace RentaHouse.Domain.Exceptions
     /// Исключение, выбрасываемое если объект или значение доменной сущности равно null.
     /// </summary>
     public class ArgumentNullValueException(string paramName)
-        : FormatException($"The domain argument \"{paramName}\" cannot be null.")
-    {
-        public string ParamName => paramName;
-    }
+        : ArgumentNullException(paramName, $"The domain argument \"{paramName}\" cannot be null.");
 }

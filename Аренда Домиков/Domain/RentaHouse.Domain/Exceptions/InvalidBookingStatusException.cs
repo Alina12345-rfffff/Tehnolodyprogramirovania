@@ -1,10 +1,14 @@
 ﻿using System;
 
-namespace RentaHouse.Domain.Exceptions;
-
-public class InvalidBookingStatusException(string currentStatus, string targetStatus)
-    : FormatException($"Cannot change booking status from \"{currentStatus}\" to \"{targetStatus}\".")
+namespace RentaHouse.Domain.Exceptions
 {
-    public string CurrentStatus => currentStatus;
-    public string TargetStatus => targetStatus;
+    /// <summary>
+    /// Исключение, выбрасываемое при попытке установить недопустимый статус бронирования.
+    /// </summary>
+    public class InvalidBookingStatusException(Booking booking, string invalidStatus)
+        : ArgumentException($"The booking status \"{invalidStatus}\" is not correct for booking ID = {booking.Id}.")
+    {
+        public Booking Booking => booking;
+        public string InvalidStatus => invalidStatus;
+    }
 }

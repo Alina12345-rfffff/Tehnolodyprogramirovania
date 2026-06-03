@@ -1,10 +1,14 @@
 ﻿using System;
 
-namespace RentaHouse.Domain.Exceptions;
-
-public class HouseAlreadyBookedException(int houseId, DateTime date)
-    : FormatException($"The house with ID {houseId} is already booked for {date.ToShortDateString()}.")
+namespace RentaHouse.Domain.Exceptions
 {
-    public int HouseId => houseId;
-    public DateTime Date => date;
+    /// <summary>
+    /// Исключение, выбрасываемое при попытке забронировать уже занятый дом.
+    /// </summary>
+    public class HouseAlreadyBookedException(House house, Booking booking)
+        : InvalidOperationException($"The house \"{house.Title}\" (ID = {house.Id}) is already booked for these dates by booking ID = {booking.Id}.")
+    {
+        public House House => house;
+        public Booking Booking => booking;
+    }
 }

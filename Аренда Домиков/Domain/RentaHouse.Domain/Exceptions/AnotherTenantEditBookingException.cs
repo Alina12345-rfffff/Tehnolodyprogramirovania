@@ -1,9 +1,13 @@
 ﻿using System;
 
-namespace RentaHouse.Domain.Exceptions;
-
-public class AnotherTenantEditBookingException(int bookingId)
-    : FormatException($"Another tenant is trying to edit the booking with ID {bookingId}.")
+namespace RentaHouse.Domain.Exceptions
 {
-    public int BookingId => bookingId;
+    /// <summary>
+    /// Исключение, выбрасываемое при попытке стороннего арендатора отредактировать чужое бронирование.
+    /// </summary>
+    public class AnotherTenantEditBookingException(int bookingId)
+        : InvalidOperationException($"Another tenant is trying to edit the booking with ID {bookingId}.")
+    {
+        public int BookingId => bookingId;
+    }
 }
